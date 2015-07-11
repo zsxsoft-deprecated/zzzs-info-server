@@ -12,6 +12,7 @@
 		"db/index.ts",
 		"express/index.ts",
 		"express/route.list.ts",
-		"static/index.ts"
+		"express/route.robot.ts",
+		"express/route.article.ts"
 	]
 }

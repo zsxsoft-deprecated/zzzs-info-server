@@ -16,6 +16,10 @@ class RouteList {
 			}
 
 			db.getArticleList(query, 1, config.list.limit).then((data: string[]) => {
+				data.map((value: any) => {
+					value.intro = value.content.replace(/\<.+?\>/g, "").substr(0, 100) + "...";
+					value.content = "";
+				});
 				res.end(JSON.stringify(data));
 			});
 		});

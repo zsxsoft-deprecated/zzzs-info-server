@@ -4,7 +4,8 @@ import cheerio = require('cheerio');
 import path = require('path');
 import url = require('url');
 import db = require('../db/index');
-
+var Entities = require('html-entities').XmlEntities;
+var entities = new Entities();
 /**
  * 学信网的Host Url
  * @type {string}
@@ -60,7 +61,9 @@ function cleanContent(content: string): string {
 	var $: CheerioStatic = cheerio.load(content);
 	$("#share").remove();
 	$(".clearFloat").remove();
-	return $.html().trim();
+	$(".l_news_time").remove();
+	$("h1").remove();
+	return entities.decode($.html().trim());
 }
 /**
  * 获取单篇文章的内容
@@ -72,12 +75,19 @@ function singleArticle(url: string): Promise<any> {
 		var $: CheerioStatic = cheerio.load(result.toString());
 		var title = $("h1").text().trim();
 		var content = $(".l_news").html();
-		var time = $(".l_news_time").text().split("\r\n")[0].trim(); // 来源和时间混一起了 
+		var timeAndSource = $(".l_news_time").text().split("\r\n");
+		var time = ""; var source = "";
+		time = timeAndSource[0].trim();
+		if (timeAndSource.length >= 1) {
+			source = timeAndSource[1].trim();
+		}
+		// 来源和时间混一起了 
 		return {
 			error: null,
 			title: title,
 			content: cleanContent(content),
 			time: time,
+			source: source,
 			id: getIdByUrl(url)
 		};
 	})
@@ -107,7 +117,7 @@ function replaceDulipatedKey(idList: string[]): Promise<string[]> {
         results.map((result: any) => {
             idList.splice(idList.indexOf(result.id), 1);
         })
-        return idList;
+        return idList; 
     });;
 }
 
@@ -157,7 +167,7 @@ export function robotUpdate() {
 		runNextList([]).then((urlList: string[]) => {
 			urlList.map((singleUrl: string) => {
 				singleArticle(url.resolve(hostUrl, singleUrl)).then((result) => {
-					db.addArticle(result.id, result.title, result.content, value, result.time);
+					db.addArticle(result.id, result.title, result.content, value, result.source, result.time, singleUrl);
 				}).error((reason) => {
 					//console.log(reason);
 					// Eat it

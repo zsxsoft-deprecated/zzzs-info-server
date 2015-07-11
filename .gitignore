@@ -4,7 +4,7 @@
 *.js
 *.map
 !/index.js
-
+!/static/index.js
 
 # Logs
 logs
