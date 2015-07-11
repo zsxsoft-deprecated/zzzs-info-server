@@ -2,9 +2,9 @@
   "name": "zzzs-info-server",
   "version": "1.0.0",
   "description": "自主招生资讯获取器",
-  "main": "index.js",
+  "main": "app.ts",
   "scripts": {
-    "start": "node index.js",
+    "start": "node app",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "zsx <zsx@zsxsoft.com>",
