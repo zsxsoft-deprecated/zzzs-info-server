@@ -1,0 +1,15 @@
+{
+	"compilerOptions": {
+		"target": "ES5",
+		"module": "commonjs",
+		"sourceMap": true,
+		"watch": true
+	}, 
+	"files": [
+		"app.ts",
+		"config.ts",
+		"robot/index.ts",
+		"db/index.ts",
+		"express/index.ts"
+	]
+}
