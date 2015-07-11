@@ -71,3 +71,16 @@ export function addArticle(id: string, title: string, content: string, category:
 		time: time
 	})
 }
+
+/**
+ * 根据所需条件从数据库得到文章
+ * @param  {any} query 
+ * @return {Promise}
+ */
+export function getArticleList(query: any, skip: number, limit: number): Promise<{}> {
+    return findAsync(articleCollection, query, null, {
+        skip: skip,
+        limit: limit,
+        sort: "id"
+    });
+}

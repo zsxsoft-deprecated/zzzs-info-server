@@ -8,3 +8,4 @@
 /// <reference path="request/request.d.ts" />
 /// <reference path="request-promise/request-promise.d.ts" />
 /// <reference path="mongodb/mongodb.d.ts" />
+/// <reference path="vue/vue.d.ts" />

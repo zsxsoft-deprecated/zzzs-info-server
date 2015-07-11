@@ -10,6 +10,8 @@
 		"config.ts",
 		"robot/index.ts",
 		"db/index.ts",
-		"express/index.ts"
+		"express/index.ts",
+		"express/route.list.ts",
+		"static/index.ts"
 	]
 }

@@ -7,10 +7,17 @@ var DB = (function () {
     }
     return DB;
 })();
+var List = (function () {
+    function List() {
+        this.limit = 10;
+    }
+    return List;
+})();
 var Config = (function () {
     function Config() {
     }
     Config.db = new DB();
+    Config.list = new List();
     return Config;
 })();
 module.exports = Config;
