@@ -23,6 +23,7 @@ app.use('/*', (req: express.Request, res: express.Response, next) => {
 });
 app.get("/", renderIndex);
 app.get("/article/:id", renderIndex);
+app.get("/advanced", renderIndex);
 
 app.listen(app.get('port'), () => {
 	console.log('Express started on: http://127.0.0.1:' + app.get('port'));

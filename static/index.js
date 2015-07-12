@@ -35,7 +35,7 @@
     function updateVue(vueObject, currentView) {
         vueObject.currentView = '' // 销毁当前的 view
         Vue.nextTick(function () {
-          vueObject.currentView = currentView
+            vueObject.currentView = currentView
         }.bind(vueObject))
     }
     
@@ -52,19 +52,19 @@
      * 每次翻页前，要先记录本次翻页的ID；在下次翻页之后暂不记录，先把值赋给computed.lastId后才可重新记录
      * 但Vue处理的流程是翻页->compute->拿数据
      * 因此，需要一个函数在拿数据之后，计算之前，临时存储ID。
-     */    
-     function updateLastId(id, method) {
-         if (method === 0) { // 拿数据时，更新上一页ID
-             //console.log("Update! origId = " + lastPageId + ", lastPageId = " + lastPageTempId + ", tempId = " + id);
-             lastPageId = lastPageTempId; // 更新ID到正式变量，并返回原Id
-             lastPageTempId = id; // 存储ID到临时变量内
+     */
+    function updateLastId(id, method) {
+        if (method === 0) { // 拿数据时，更新上一页ID
+            //console.log("Update! origId = " + lastPageId + ", lastPageId = " + lastPageTempId + ", tempId = " + id);
+            lastPageId = lastPageTempId; // 更新ID到正式变量，并返回原Id
+            lastPageTempId = id; // 存储ID到临时变量内
              
-         } else { // 计算时，拿回ID。
-             //console.log("lastPageId = " + lastPageId + ", tempId = " + lastPageTempId);
-             return lastPageId;
-         }
-     }
-                    // 
+        } else { // 计算时，拿回ID。
+            //console.log("lastPageId = " + lastPageId + ", tempId = " + lastPageTempId);
+            return lastPageId;
+        }
+    }
+    // 
     // 先把URL Parse一遍
     // 好像并没有什么卵用，全部交给服务端来处理了
     /**
@@ -72,8 +72,8 @@
      * @type {Object}
      */
     var $get = {};
-    location.search.substr(1).split("&").forEach(function(item) {var k = item.split("=")[0], v = item.split("=")[1]; v = v && decodeURIComponent(v); (k in $get) ? $get[k].push(v) : $get[k] = [v]});
-    
+    location.search.substr(1).split("&").forEach(function (item) { var k = item.split("=")[0], v = item.split("=")[1]; v = v && decodeURIComponent(v); (k in $get) ? $get[k].push(v) : $get[k] = [v] });
+
     window.addEventListener('DOMContentLoaded', function () {
 
         Vue.component('list', {
@@ -101,6 +101,35 @@
                 });
             }
         });
+        Vue.component('advanced', {
+            template: '#advanced-template',
+            methods: {
+                updateRobot: function (e) {
+                    var that = this;
+                    getJsonAsync("/api/robot/", function (err, res) {
+                        that.list = JSON.stringify(res);
+                        that.isInitialized = true;
+                    });
+                    e.preventDefault();
+                },
+                read10Stdout: function (e) {
+                    var that = this;
+                    getJsonAsync("/api/stdout/10/", function (err, res) {
+                        that.list = res.join("\n");
+                        that.isInitialized = true;
+                    });
+                    e.preventDefault();
+                },
+                readStdout: function (e) {
+                    var that = this;
+                    getJsonAsync("/api/stdout/", function (err, res) {
+                        that.list = res.join("\n");
+                        that.isInitialized = true;
+                    });
+                    e.preventDefault();
+                }
+            }
+        });
         Vue.component('single-list', {
             template: "#single-list",
             replace: true,
@@ -122,7 +151,7 @@
         /** 
          * 用于记录上一页的ID
          */
-       
+
         var app = new Vue({
             el: "#app",
             data: {
@@ -133,21 +162,28 @@
                 }
             },
             computed: { // Computed不能在component里定义
-                nextId: function() {
+                nextId: function () {
                     return this.result.list[this.result.list.length - 1].id;
-                }, 
-                lastId: function() {
+                },
+                lastId: function () {
                     return updateLastId(0, 1);
                 }
             }
         });
 
         page('/', function () {
+            app.result.list = [];
             updateVue(app, 'list');
         });
 
         page('/article/:id', function (object) {
+            app.result.list = [];
             updateVue(app, 'view');
+        });
+
+        page('/advanced/', function (object) {
+            app.result.list = "";
+            updateVue(app, 'advanced');
         });
 
         page();

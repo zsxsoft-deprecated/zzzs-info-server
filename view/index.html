@@ -21,6 +21,12 @@
 <h1 class="content-subhead">最新消息</h1><section class="post" v-repeat="list" v-component="single-list"></section></div>
 <!--<a v-attr="href: '/?id=' + $root.lastId">上一页</a> &nbsp; --><a v-attr="href: '/?id=' + $root.nextId">下一页</a>
 </script>
+<script type="text/x-template" id="advanced-template">
+<form class="pure-form">
+<button class="pure-button" v-on="click: updateRobot($event)">机器人更新</button>&nbsp;<button class="pure-button" v-on="click: read10Stdout($event)">读取10行stdout</button>&nbsp;<button class="pure-button" v-on="click: readStdout($event)">读取stdout</button>
+<br/><br/><p><textarea class="pure-input-1" placeholder="Server Result" rows="20" v-model="list" readonly></textarea></p>
+</form>
+</script>
 <script type="text/x-template" id="single-view">
 <header class="post-header"><h2 class="post-title" v-text="title"></h2>
 <p class="post-meta"><span v-text="source +' / '+ time"></span> <a class="post-category post-category-design" target="_blank" v-attr="href: 'http://gaokao.chsi.com.cn' + url">去官网</a></p>
@@ -33,6 +39,7 @@
 </header>
 <div class="post-description" v-html="intro"></div>
 </script>
+
 	<div id="layout" class="pure-g">
 		<div class="sidebar pure-u-1 pure-u-md-1-4">
 			<div class="header">
@@ -49,6 +56,9 @@
                     </li>
 				 	<li class="nav-item">
                         <a class="pure-button" href="/?category=gkxx%2Fzzzs%2Fgxzc%2F">高校政策</a>
+                    </li>
+				 	<li class="nav-item">
+                        <a class="pure-button" href="/advanced">高级工具</a>
                     </li>
                 </ul>
             </nav>
