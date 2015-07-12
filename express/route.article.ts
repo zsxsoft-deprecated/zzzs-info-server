@@ -6,9 +6,8 @@ import util = require('../utils/index');
 class RouteList {
 	constructor(app: express.Express) {
 		app.get("/api/article/:id", (req: express.Request, res: express.Response) => {			
-			console.log(req.params);
 			db.findOne({
-				id: req.params.id
+				id: parseInt(req.params.id)
 			}).then((data: any) => {
 				data.time = util.formatDate(new Date(data.time));
 				res.end(JSON.stringify(data));

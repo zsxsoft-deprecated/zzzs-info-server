@@ -18,9 +18,13 @@ function returnArticleList(requestParams: any): Promise<any> {
 	var $or: any = [];
 	if (isNaN(page) || page === null) page = 0;
 
-	if ('id' in requestParams) {
+	if ('id' in requestParams) { // ID翻页用
 		query.id = {
-			$lte: requestParams.id
+			$lte: parseInt(requestParams.id)
+		}
+	} else if ('lastId' in requestParams) { // ID获取最新消息用
+		query.id = {
+			$gt: parseInt(requestParams.lastId)
 		}
 	}
 
@@ -36,6 +40,8 @@ function returnArticleList(requestParams: any): Promise<any> {
 	if ($or.length > 0) {
 		query.$or = $or;
 	}
+	
+	console.log(query);
 	return db.getArticleList(query, 0, config.view.limit);
 }
 

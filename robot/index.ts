@@ -77,12 +77,12 @@ function singleArticle(url: string): Promise<any> {
  * @param  {string} url
  * @return {string} 
  */
-function getIdByUrl(url: string): string {
+function getIdByUrl(url: string): number {
 	var match: RegExpMatchArray = url.match(/(\d+)\.html/);
 	if (match === null || match.length <= 1) {
-		return "";
+		return 0;
 	} else {
-		return match[1];
+		return parseInt(match[1]);
 	}
 }
 
