@@ -18,6 +18,7 @@
 </script>
 <script type="text/x-template" id="list-template">
 <h1 class="content-subhead">最新消息</h1><section class="post" v-repeat="list" v-component="single-list"></section></div>
+<!--<a v-attr="href: '/?id=' + $root.lastId">上一页</a> &nbsp; --><a v-attr="href: '/?id=' + $root.nextId">下一页</a>
 </script>
 <script type="text/x-template" id="single-view">
 <header class="post-header"><h2 class="post-title" v-text="title"></h2>
@@ -40,13 +41,13 @@
 				<nav class="nav">
                 <ul class="nav-list">
                     <li class="nav-item">
-                        <a class="pure-button" href="http://purecss.io">自招动态</a>
+                        <a class="pure-button" href="/?category=gkxx%2Fzzzs%2F">自招动态</a>
                     </li>
                     <li class="nav-item">
-                        <a class="pure-button" href="http://yuilibrary.com">报考指南</a>
+                        <a class="pure-button" href="/?category=gkxx%2Fzzzs%2Fbkzn%2F">报考指南</a>
                     </li>
 				 	<li class="nav-item">
-                        <a class="pure-button" href="http://yuilibrary.com">高校政策</a>
+                        <a class="pure-button" href="/?category=gkxx%2Fzzzs%2Fgxzc%2F">高校政策</a>
                     </li>
                 </ul>
             </nav>

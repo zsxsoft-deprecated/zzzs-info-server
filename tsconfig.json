@@ -1,9 +1,7 @@
 {
 	"compilerOptions": {
 		"target": "ES5",
-		"module": "commonjs",
-		"sourceMap": true,
-		"watch": true
+		"module": "commonjs"
 	}, 
 	"files": [
 		"app.ts",
@@ -13,6 +11,7 @@
 		"express/index.ts",
 		"express/route.list.ts",
 		"express/route.robot.ts",
-		"express/route.article.ts"
+		"express/route.article.ts",
+		"utils/index.ts"
 	]
 }

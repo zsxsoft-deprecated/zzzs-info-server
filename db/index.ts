@@ -103,7 +103,7 @@ export function getArticleList(query: any, skip: number, limit: number): Promise
     return findAsync(articleCollection, query, null, {
         skip: skip,
         limit: limit,
-        sort: "id"
+        sort: [['time', 'desc']]
     });
 }
 
