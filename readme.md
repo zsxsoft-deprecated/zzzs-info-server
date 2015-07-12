@@ -26,6 +26,7 @@ db.article.ensureIndex({id: -1, time: -1});
 
 未经标识，参数均采用QueryString(即?xxx=xxx&xxx=xxx)形式输入。
 
+
 ##### ``GET /api/robot/ -> object``
 
 启动爬虫，抓取最新资讯。
@@ -49,6 +50,12 @@ db.article.ensureIndex({id: -1, time: -1});
 > @param id       number 指定从某条之后读取
 
 得到指定条件的列表
+
+##### ``GET /rss/(...) -> string``
+
+> @param @see /api/list
+
+得到RSS列表
 
 ##### ``GET /api/article/:id -> object``
 

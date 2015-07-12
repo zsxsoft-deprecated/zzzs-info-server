@@ -5,33 +5,10 @@ import path = require('path');
 import url = require('url');
 import db = require('../db/index');
 import util = require('../utils/index');
+import config = require('../config');
 
 var Entities = require('html-entities').XmlEntities;
 var entities = new Entities();
-/**
- * 学信网的Host Url
- * @type {string}
- */
-var hostUrl: string = "http://gaokao.chsi.com.cn/";
-/**
- * 不采集超过年份的信息
- * @type {number}
- */
-var earlistYear: number = 2014;
-/**
- * 学信网每个列表页的文章数目
- * @type {number}
- */
-var singlePageList: number = 30;
-/**
- * 学信网栏目列表
- * @type {string[]>}
- */
-var scanList: string[] = [
-	"gkxx/zzzs/", // 动态
-	"gkxx/zzzs/bkzn/", // 报考指南
-	"gkxx/zzzs/gxzc/", // 高校政策
-];
 /**
  * 获取单个列表的内容
  * @param  {string}       url
@@ -45,7 +22,7 @@ function singleList(url: string): Promise<any> {
 		elements.map((index: number, element: CheerioElement) => {
 			var $e: Cheerio = $(element);
 			var timeString: string = $e.children(".spanTime").text();
-			if (new Date(timeString).getFullYear() >= earlistYear) {
+			if (new Date(timeString).getFullYear() >= config.robot.earlistYear) {
 				urlList.push($e.children("a").attr("href"));
 			}
 		});
@@ -126,7 +103,7 @@ function replaceDulipatedKey(idList: string[]): Promise<string[]> {
 export function robotUpdate() {//: Promise<any> {
 
 	function runNextList(nowPage: number, searchUrl: string, urlList: string[]) {
-		return singleList(hostUrl + searchUrl + "?start=" + nowPage).then((oneUrlList: string[]) => {
+		return singleList(config.robot.hostUrl + searchUrl + "?start=" + nowPage).then((oneUrlList: string[]) => {
 			/**
 			 * 首先，我们要对URL进行去重处理。
 			 * 在数据库中，保存的内容是ID。所以我们要从URL解析出ID，然后把ID提交给数据库检查哪些ID还没被计入数据库
@@ -154,7 +131,7 @@ export function robotUpdate() {//: Promise<any> {
 				console.log("Fetch " + searchUrl + "?start=" + nowPage + ", get " + uniqueUrlList.length + " urls.");
 				urlList = urlList.concat(uniqueUrlList);
 				console.log("Queue: " + urlList.length);
-				nowPage += singlePageList;
+				nowPage += config.robot.singlePageList;
 				// 为了保险起见，对urlList进行一次去重
 				util.unique(urlList);
 				/**	
@@ -162,7 +139,7 @@ export function robotUpdate() {//: Promise<any> {
 				 * 如果是中途截断的话，其必定有余数
 				 * 或者，如果独立ID已经没有的话，也可以视为拉取完成（这一页全部拉取过了，或这一页是空的）
 				 */
-				if (uniqueIdList.length === 0 || (urlList.length % singlePageList > 0)) {
+				if (uniqueIdList.length === 0 || (urlList.length % config.robot.singlePageList > 0)) {
 					return {
 						category: searchUrl, 
 						urlList: urlList
@@ -177,7 +154,7 @@ export function robotUpdate() {//: Promise<any> {
 	function promiseThen(singleUrlList: any) {
 		console.log("Got " + singleUrlList.urlList.length + " Url in " + singleUrlList.category);
 		singleUrlList.urlList.map((singleUrl: string) => {
-			singleArticle(url.resolve(hostUrl, singleUrl)).then((result) => {
+			singleArticle(url.resolve(config.robot.hostUrl, singleUrl)).then((result) => {
 				console.log("Inserted: " + result.id + " (" + singleUrlList.category + ") (" + result.title + ")");
 				db.addArticle(result.id, result.title, result.content, singleUrlList.category, result.source, result.time, singleUrl);
 			}).error((reason) => {
@@ -189,8 +166,8 @@ export function robotUpdate() {//: Promise<any> {
 	
 	
 	var resolver: any[] = [null, null, null];
-	for (var index in scanList) {
-		var value: string = scanList[index];
+	for (var index in config.robot.scanList) {
+		var value: string = config.robot.scanList[index];
 		var nowPage: number = 0;
 		resolver[index] = Promise.defer();
 		resolver[index].promise.then(promiseThen);

@@ -19,6 +19,19 @@
     "mongodb": "^2.0.36",
     "request": "^2.58.0",
     "request-promise": "^0.4.2",
+    "rss": "^1.1.1",
     "typescript": "^1.5.0-beta"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zsxsoft/zzzs-info-server.git"
+  },
+  "keywords": [
+    "自主招生"
+  ],
+  "bugs": {
+    "url": "https://github.com/zsxsoft/zzzs-info-server/issues"
+  },
+  "homepage": "https://github.com/zsxsoft/zzzs-info-server"
 }
