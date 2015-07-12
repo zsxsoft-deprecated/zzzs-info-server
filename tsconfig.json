@@ -12,6 +12,7 @@
 		"express/route.list.ts",
 		"express/route.robot.ts",
 		"express/route.article.ts",
-		"utils/index.ts"
+		"utils/index.ts",
+		"cron/index.ts"
 	]
 }

@@ -73,9 +73,27 @@ class View {
 	 */
 	limit: number = 20;
 }
+class Cron {
+	/**
+	 * 机器人定时抓取开关
+	 * @type {boolean}
+	 */
+	enable: boolean = true;
+	/**
+	 * 机器人定时抓取时间
+	 * @type {string}
+	 * @example
+	 * * * * * * *
+	 * 00 30 11 * * 1-5
+	 * @description Seconds: 0-59 / Minutes: 0-59 / Hours: 0-23 / Day of Month: 1-31 / Months: 0-11 / Day of Week: 0-6
+	 * @see https://github.com/ncb000gt/node-cron
+	 */
+	cronTime: string = "0 * * * * *";
+}
 class Config {
 	static db: DB = new DB();
 	static view: View = new View();
 	static robot: Robot = new Robot();
+	static cron: Cron = new Cron();
 }
 export = Config;
