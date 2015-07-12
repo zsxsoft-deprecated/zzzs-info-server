@@ -13,7 +13,7 @@ zzzz-info-server
 
 1. Clone这个项目
 2. 安装MongoDB(https://www.mongodb.org/)，对``config.ts``进行配置
-3. npm install
+3. npm install && tsd install 
 4. MongoDB内，为你的数据库插入索引：
 ```javascript
 use YOUR_DATABASE;

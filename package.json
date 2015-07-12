@@ -12,6 +12,7 @@
   "dependencies": {
     "bluebird": "^2.9.33",
     "cheerio": "^0.19.0",
+    "cron": "^1.0.9",
     "ejs": "^2.3.2",
     "express": "^4.13.1",
     "html-entities": "^1.1.2",

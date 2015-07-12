@@ -6,6 +6,9 @@
 !/index.js
 !/static/index.js
 
+## TypeScript
+# /typings
+
 # Logs
 logs
 *.log

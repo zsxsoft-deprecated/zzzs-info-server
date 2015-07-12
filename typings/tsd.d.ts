@@ -10,3 +10,4 @@
 /// <reference path="mongodb/mongodb.d.ts" />
 /// <reference path="vue/vue.d.ts" />
 /// <reference path="page/page.d.ts" />
+/// <reference path="cron/cron.d.ts" />
