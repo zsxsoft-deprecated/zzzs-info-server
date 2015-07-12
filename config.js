@@ -9,7 +9,7 @@ var DB = (function () {
 })();
 var List = (function () {
     function List() {
-        this.limit = 10;
+        this.limit = 20;
     }
     return List;
 })();

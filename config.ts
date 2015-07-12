@@ -5,7 +5,7 @@ class DB {
 	db: string = "zzzs";
 }
 class List {
-	limit: number = 10;
+	limit: number = 20;
 }
 class Config {
 	static db: DB = new DB();
