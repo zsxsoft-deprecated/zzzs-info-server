@@ -44,11 +44,13 @@ db.article.ensureIndex({id: -1, time: -1});
 得到最后数行的stdout
 
 
-##### ``GET /api/list/(category?: string, id?: string) -> object``
+##### ``GET /api/list/(category?: string, id?: string, search?: string) -> object``
 
 > @param category string 指定查询分类
 
 > @param id       number 指定从某条之后读取
+
+> @param search   string 从标题和文章中搜索指定内容
 
 得到指定条件的列表
 

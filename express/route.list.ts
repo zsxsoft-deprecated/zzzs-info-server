@@ -15,7 +15,7 @@ import RSS = require('rss');
 function returnArticleList(requestParams: any): Promise<any> {
 	var query: any = {};
 	var page: number = parseInt(requestParams.page);
-	
+	var $or: any = [];
 	if (isNaN(page) || page === null) page = 0;
 
 	if ('id' in requestParams) {
@@ -27,13 +27,23 @@ function returnArticleList(requestParams: any): Promise<any> {
 	if ('category' in requestParams) {
 		query.category = requestParams.category;
 	}
+	
+	if ('search' in requestParams) {
+		$or.push({title: new RegExp(util.quoteRegExp(requestParams.search))});
+		$or.push({content: new RegExp(util.quoteRegExp(requestParams.search))});
+	}
 
+	if ($or.length > 0) {
+		query.$or = $or;
+	}
 	return db.getArticleList(query, 0, config.view.limit);
 }
 
 class RouteList {
 	constructor(app: express.Express) {
 		var that = this;
+
+		
 		app.get("/api/list/", (req: express.Request, res: express.Response) => {
 			returnArticleList(req.query).then((data: string[]) => {
 				data.map((value: any) => {
