@@ -1,0 +1,30 @@
+{
+  "name": "zzzs-info-server",
+  "version": "0.0.1",
+  "homepage": "https://github.com/zsxsoft/zzzs-info-server",
+  "description": "自主招生信息服务器",
+  "moduleType": [
+    "node"
+  ],
+  "keywords": [
+    "自主招生",
+    "爬虫",
+    "robot"
+  ],
+  "authors": [
+    "zsx<zsx@zsxsoft.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "pure": "~0.6.0",
+    "vue": "~0.12.7",
+    "page.js": "~1.6.3"
+  }
+}

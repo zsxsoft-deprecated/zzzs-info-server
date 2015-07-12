@@ -55,12 +55,12 @@
      */    
      function updateLastId(id, method) {
          if (method === 0) { // 拿数据时，更新上一页ID
-             console.log("Update! origId = " + lastPageId + ", lastPageId = " + lastPageTempId + ", tempId = " + id);
+             //console.log("Update! origId = " + lastPageId + ", lastPageId = " + lastPageTempId + ", tempId = " + id);
              lastPageId = lastPageTempId; // 更新ID到正式变量，并返回原Id
              lastPageTempId = id; // 存储ID到临时变量内
              
          } else { // 计算时，拿回ID。
-             console.log("lastPageId = " + lastPageId + ", tempId = " + lastPageTempId);
+             //console.log("lastPageId = " + lastPageId + ", tempId = " + lastPageTempId);
              return lastPageId;
          }
      }
