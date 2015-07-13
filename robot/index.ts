@@ -6,6 +6,7 @@ import url = require('url');
 import db = require('../db/index');
 import util = require('../utils/index');
 import config = require('../config');
+import event = require('../event/index');
 
 var Entities = require('html-entities').XmlEntities;
 var entities = new Entities();
@@ -26,6 +27,7 @@ function singleList(url: string): Promise<any> {
 				urlList.push($e.children("a").attr("href"));
 			}
 		});
+		event.emit("robot.getSingleList", urlList);
 		return urlList;
 	}).error((reason) => {
 
@@ -42,6 +44,7 @@ function cleanContent(content: string): string {
 	$(".clearFloat").remove();
 	$(".l_news_time").remove();
 	$("h1").remove();
+	event.emit("robot.cleanContent", $);
 	return entities.decode($.html().trim());
 }
 /**
@@ -60,8 +63,7 @@ function singleArticle(url: string): Promise<any> {
 		if (timeAndSource.length >= 1) {
 			source = timeAndSource[1].trim();
 		}
-		// 来源和时间混一起了 
-		return {
+		var returnObject =  {
 			error: null,
 			title: title,
 			content: cleanContent(content),
@@ -69,6 +71,8 @@ function singleArticle(url: string): Promise<any> {
 			source: source,
 			id: getIdByUrl(url)
 		};
+		event.emit("robot.singleArticle", returnObject);
+		return returnObject;
 	})
 };
 
@@ -91,8 +95,8 @@ function getIdByUrl(url: string): number {
  * @param  {string[]}          idList
  * @return {Promise<string[]>}       
  */
-function replaceDulipatedKey(idList: string[]): Promise<string[]> {
-	return db.findArticleByIdList(idList).then((results: Array<string[]>) => {
+function replaceDulipatedKey(idList: number[]): Promise<number[]> {
+	return db.findArticleByIdList(idList).then((results: Array<number[]>) => {
         results.map((result: any) => {
             idList.splice(idList.indexOf(result.id), 1);
         })
@@ -100,6 +104,8 @@ function replaceDulipatedKey(idList: string[]): Promise<string[]> {
     });;
 }
 
+// 这里注册自身到cron内部
+event.on('cron.tick', robotUpdate);
 export function robotUpdate() {//: Promise<any> {
 
 	function runNextList(nowPage: number, searchUrl: string, urlList: string[]) {
@@ -110,22 +116,22 @@ export function robotUpdate() {//: Promise<any> {
 			 * 因此，我们需要一个专门的数据结构，来存储ID与URL的对应值。
 			 */
 			var urlWithKey: any = {};
-			var idList: string[] = [];
+			var idList: number[] = [];
 			oneUrlList.map((url: string) => {
-				var id: string = getIdByUrl(url);
-				if (id !== "") {
+				var id: number = getIdByUrl(url);
+				if (id !== 0) {
 					urlWithKey[id] = url;
 					idList.push(id);
 				}
 			});
 
-			return replaceDulipatedKey(idList).then((uniqueIdList: string[]) => {
+			return replaceDulipatedKey(idList).then((uniqueIdList: number[]) => {
 				/**
 				 * 到这里，我们已经拿到了去过重的ID
 				 * 因此，我们就要整理出一份去过重的Url
 				 */
 				var uniqueUrlList: string[] = [];
-				uniqueIdList.map((id: string) => {
+				uniqueIdList.map((id: number) => {
 					uniqueUrlList.push(urlWithKey[id]);
 				});
 				console.log("Fetch " + searchUrl + "?start=" + nowPage + ", get " + uniqueUrlList.length + " urls.");
@@ -134,6 +140,7 @@ export function robotUpdate() {//: Promise<any> {
 				nowPage += config.robot.singlePageList;
 				// 为了保险起见，对urlList进行一次去重
 				util.unique(urlList);
+				event.emit("robot.getUrlList", urlList);
 				/**	
 				 * 如果这里得到的Url不是每个页面的数据的倍数，就自动停止拉取
 				 * 如果是中途截断的话，其必定有余数
@@ -156,6 +163,7 @@ export function robotUpdate() {//: Promise<any> {
 		singleUrlList.urlList.map((singleUrl: string) => {
 			singleArticle(url.resolve(config.robot.hostUrl, singleUrl)).then((result) => {
 				console.log("Inserted: " + result.id + " (" + singleUrlList.category + ") (" + result.title + ")");
+				event.emit("robot.insertArticle", result);
 				db.addArticle(result.id, result.title, result.content, singleUrlList.category, result.source, result.time, singleUrl);
 			}).error((reason) => {
 				//console.log(reason);

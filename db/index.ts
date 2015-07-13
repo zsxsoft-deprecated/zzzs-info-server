@@ -64,7 +64,7 @@ function findOneAsync(collection: mongodb.Collection, query: any, fields: any = 
  * @param  {string[]} idList [description]
  * @return {Promise}              [description]
  */
-export function findArticleByIdList(idList: string[]): Promise<{}> {
+export function findArticleByIdList(idList: number[]): Promise<{}> {
 	return findAsync(articleCollection, {
 		id: {
 			$in: idList
