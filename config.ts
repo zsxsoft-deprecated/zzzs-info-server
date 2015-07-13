@@ -1,3 +1,4 @@
+var that = this;
 class Robot {
 	/**
 	 * 学信网的Host Url
@@ -16,13 +17,18 @@ class Robot {
 	singlePageList: number = 30;
 	/**
 	 * 学信网栏目列表
-	 * @type {string[]>}
+	 * @type {string[]}
 	 */
 	scanList: string[] = [
 		"gkxx/zzzs/", // 动态
 		"gkxx/zzzs/bkzn/", // 报考指南
 		"gkxx/zzzs/gxzc/", // 高校政策
 	];
+	/**
+	 * 抓取延迟（毫秒）
+	 * @type {number}
+	 */
+	timeout: number = 20;
 }
 class DB {
 	/**
@@ -90,10 +96,38 @@ class Cron {
 	 */
 	cronTime: string = "0 * * * * *";
 }
+
+class Plugin {
+	
+	/**
+	 * 插件列表
+	 * 插件必须存在/plugin/xxx/index.js
+	 * TypeScript编写插件需要额外在tsconfig.json内写入需要编译文件
+	 * @type {string}
+	 */
+	pluginList: string[] = [
+		"getui"
+	];
+	
+	/**
+	 * 动态插件类
+	 */
+	plugin: any = {
+		getui: {
+			host: "http://sdk.open.api.igexin.com/apiex.htm",
+			appKey: "",
+			appId: [""],
+			masterSecret: "",
+			logoUrl: ""
+		}
+	};
+	
+}
 class Config {
 	static db: DB = new DB();
 	static view: View = new View();
 	static robot: Robot = new Robot();
 	static cron: Cron = new Cron();
+	static plugin: Plugin = new Plugin();
 }
 export = Config;

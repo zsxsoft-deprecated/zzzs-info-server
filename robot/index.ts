@@ -159,16 +159,20 @@ export function robotUpdate() {//: Promise<any> {
 	};
 	
 	function promiseThen(singleUrlList: any) {
+		var timeoutForCatch: number = 0;
 		console.log("Got " + singleUrlList.urlList.length + " Url in " + singleUrlList.category);
 		singleUrlList.urlList.map((singleUrl: string) => {
-			singleArticle(url.resolve(config.robot.hostUrl, singleUrl)).then((result) => {
-				console.log("Inserted: " + result.id + " (" + singleUrlList.category + ") (" + result.title + ")");
-				event.emit("robot.insertArticle", result);
-				db.addArticle(result.id, result.title, result.content, singleUrlList.category, result.source, result.time, singleUrl);
-			}).error((reason) => {
-				//console.log(reason);
-				// Eat it
-			});
+			setTimeout(() => {
+				singleArticle(url.resolve(config.robot.hostUrl, singleUrl)).then((result) => {
+					console.log("Inserted: " + result.id + " (" + singleUrlList.category + ") (" + result.title + ")");
+					event.emit("robot.insertArticle", result);
+					db.addArticle(result.id, result.title, result.content, singleUrlList.category, result.source, result.time, singleUrl);
+				}).error((reason) => {
+					//console.log(reason);
+					// Eat it
+				});
+			}, timeoutForCatch);
+			timeoutForCatch += config.robot.timeout;
 		})
 	};
 	

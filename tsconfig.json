@@ -13,6 +13,9 @@
 		"express/route.robot.ts",
 		"express/route.article.ts",
 		"utils/index.ts",
-		"cron/index.ts"
+		"cron/index.ts",
+		"event/index.ts",
+		"plugin/index.ts",
+		"plugin/getui/index.ts"
 	]
 }
