@@ -26,7 +26,7 @@ app.get("/article/:id", renderIndex);
 app.get("/advanced", renderIndex);
 
 app.listen(app.get('port'), () => {
-	console.log('Express started on: http://127.0.0.1:' + app.get('port'));
+	console.info('Express started on: http://127.0.0.1:' + app.get('port'));
 }); 
 
 // 读取其它路由

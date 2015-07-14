@@ -3,6 +3,6 @@ import fs = require('fs');
 import config = require('../config');
 
 config.plugin.pluginList.map((value: string) => {
-	console.log('Import plugin ' + value);
+	console.info('Import plugin ' + value);
 	require('./' + value + '/');
 });

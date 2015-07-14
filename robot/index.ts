@@ -10,13 +10,25 @@ import event = require('../event/index');
 
 var Entities = require('html-entities').XmlEntities;
 var entities = new Entities();
+
+function requestUrl(url: string): Promise<any> {
+	return rp({
+		timeout: config.robot.requestTimeout, 
+		headers: {
+			'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.9 Safari/537.36 PoweredByZsx zzzs-info-server/1.0'
+		}, 
+		uri: url, 
+		gzip: true
+	});
+}
+
 /**
  * 获取单个列表的内容
  * @param  {string}       url
  * @return {Promise<any>}    
  */
 function singleList(url: string): Promise<any> {
-	return rp(url).then((result) => {
+	return requestUrl(url).then((result) => {
 		var $: CheerioStatic = cheerio.load(result.toString());
 		var elements: Cheerio = $(".l_news_list> li");
 		var urlList: Array<string> = [];
@@ -30,7 +42,7 @@ function singleList(url: string): Promise<any> {
 		event.emit("robot.getSingleList", urlList);
 		return urlList;
 	}).error((reason) => {
-
+		console.error("Fetch " + url + " " + reason.toString());
 	});
 };
 /**
@@ -53,7 +65,7 @@ function cleanContent(content: string): string {
  * @return {Promise<any>}    
  */
 function singleArticle(url: string): Promise<any> {
-	return rp(url).then((result) => {
+	return requestUrl(url).then((result) => {
 		var $: CheerioStatic = cheerio.load(result.toString());
 		var title = $("h1").text().trim();
 		var content = $(".l_news").html();
@@ -168,11 +180,10 @@ export function robotUpdate() {//: Promise<any> {
 					event.emit("robot.insertArticle", result);
 					db.addArticle(result.id, result.title, result.content, singleUrlList.category, result.source, result.time, singleUrl);
 				}).error((reason) => {
-					//console.log(reason);
-					// Eat it
+					console.error("Fetch " + url + " " + reason.toString());
 				});
 			}, timeoutForCatch);
-			timeoutForCatch += config.robot.timeout;
+			timeoutForCatch += config.robot.delay;
 		})
 	};
 	

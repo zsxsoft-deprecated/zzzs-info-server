@@ -28,7 +28,11 @@ class Robot {
 	 * 抓取延迟（毫秒）
 	 * @type {number}
 	 */
-	timeout: number = 20;
+	delay: number = 200;
+	/**
+	 * 抓取超时时间（毫秒）
+	 */
+	requestTimeout: number = 2000;
 }
 class DB {
 	/**
