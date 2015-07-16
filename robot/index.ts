@@ -109,11 +109,12 @@ function getIdByUrl(url: string): number {
  */
 function replaceDuplicatedKey(idList: number[]): Promise<number[]> {
 	return db.findArticleByIdList(idList).then((results: Array<number[]>) => {
+		results = util.unique(results, 'id');
         results.map((result: any) => {
             idList.splice(idList.indexOf(result.id), 1);
-        })
+        });
         return idList;
-    });;
+    });
 }
 
 // 这里注册自身到cron内部
@@ -152,7 +153,7 @@ export function robotUpdate() {//: Promise<any> {
 				console.log("Queue: " + urlList.length);
 				nowPage += config.robot.singlePageList;
 				// 为了保险起见，对urlList进行一次去重
-				util.unique(urlList);
+				urlList = util.unique(urlList);
 				event.emit("robot.getUrlList", urlList);
 				/**	
 				 * 如果这里得到的Url不是每个页面的数据的倍数，就自动停止拉取
