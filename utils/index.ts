@@ -26,7 +26,7 @@ export function unique(arr: any, objectId: any = null): any {
  * @return {any}
  */
 export function formatDate(date: Date): string {
-	return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDay() + " " + date.getHours() + ":" + date.getMinutes()
+	return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes()
 }
 
 /**
