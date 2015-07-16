@@ -107,7 +107,7 @@ function getIdByUrl(url: string): number {
  * @param  {string[]}          idList
  * @return {Promise<string[]>}       
  */
-function replaceDulipatedKey(idList: number[]): Promise<number[]> {
+function replaceDuplicatedKey(idList: number[]): Promise<number[]> {
 	return db.findArticleByIdList(idList).then((results: Array<number[]>) => {
         results.map((result: any) => {
             idList.splice(idList.indexOf(result.id), 1);
@@ -137,7 +137,8 @@ export function robotUpdate() {//: Promise<any> {
 				}
 			});
 
-			return replaceDulipatedKey(idList).then((uniqueIdList: number[]) => {
+			return replaceDuplicatedKey(idList).then((uniqueIdList: number[]) => {
+
 				/**
 				 * 到这里，我们已经拿到了去过重的ID
 				 * 因此，我们就要整理出一份去过重的Url
