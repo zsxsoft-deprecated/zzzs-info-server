@@ -13,13 +13,14 @@ zzzz-info-server
 ## 配置说明
 
 1. Clone这个项目
-2. 安装MongoDB(https://www.mongodb.org/)，对``config.ts``进行配置
-3. npm install && tsd install 
+2. 安装MongoDB（https://www.mongodb.org/），对``config.ts``进行配置
+3. bower install && npm install && tsd install 
 4. MongoDB内，为你的数据库插入索引：
-```javascript
-use YOUR_DATABASE;
-db.article.ensureIndex({id: -1, time: -1});
-```
+    
+    > use YOUR_DATABASE;
+    
+    > db.article.ensureIndex({id: -1, time: -1});
+    
 5. tsc （编译TypeScript，忽略其显示的任何错误）
 6. npm start
 
