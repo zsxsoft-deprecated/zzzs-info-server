@@ -110,7 +110,7 @@ class Plugin {
 	 * @type {string}
 	 */
 	pluginList: string[] = [
-		"getui"
+		"xinge"
 	];
 	
 	/**
@@ -123,6 +123,10 @@ class Plugin {
 			appId: [""],
 			masterSecret: "",
 			logoUrl: ""
+		}, 
+		xinge: {
+			accessId: 0, // 这里必须为Int类型！
+			secretKey: ""
 		}
 	};
 	

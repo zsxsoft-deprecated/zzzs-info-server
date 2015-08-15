@@ -13,7 +13,7 @@ zzzz-info-server
 ## 配置说明
 
 1. Clone这个项目
-2. 安装MongoDB（https://www.mongodb.org/），对``config.ts``进行配置
+2. 安装[MongoDB](https://www.mongodb.org/)，对``config.ts``进行配置
 3. bower install && npm install && tsd install 
 4. MongoDB内，为你的数据库插入索引：
     
@@ -23,6 +23,12 @@ zzzz-info-server
     
 5. tsc （编译TypeScript，忽略其显示的任何错误）
 6. npm start
+
+## 手机推送平台说明
+
+使用[腾讯信鸽](http://xg.qq.com/)，需要手动``npm install xinge``后在``config.ts``配置信息。
+
+使用[个推](http://getui.com/)，需要手动``npm install igetui``后在``config.ts``配置信息。
 
 ## API说明
 

@@ -16,6 +16,7 @@
 		"cron/index.ts",
 		"event/index.ts",
 		"plugin/index.ts",
-		"plugin/getui/index.ts"
+		"plugin/getui/index.ts", 
+		"plugin/xinge/index.ts"
 	]
 }
