@@ -1,23 +1,10 @@
 /**
  * 数组去重
  * @param {any} arr 
- * @param {any} objectId 如果对象是Object的话，指定一个Object内的方法或属性作为唯一去重ID
  * @return {any}
  */
-export function unique(arr: any, objectId: any = null): any {
-	  var ret: any = [];
-	  var hash: any = {};
-
-	  for (var i = 0; i < arr.length; i++) {
-		    var item = arr[i];
-		    var key = typeof (item) + (objectId === null ? item : item[objectId]);
-		    if (hash[key] !== 1) {
-			      ret.push(item);
-			      hash[key] = 1;
-		    }
-	  }
-
-	  return ret;
+export function unique(arr: any): any {
+	return Array.from(new Set(arr));
 }
 
 /**
