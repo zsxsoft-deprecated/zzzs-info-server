@@ -70,4 +70,3 @@ event.on("robot.insertArticle", (result: any) => {
     });
 
 });
-event.emit("robot.insertArticle", {title: "测试", content: "我就测试一下"});
