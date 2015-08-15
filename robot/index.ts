@@ -109,7 +109,7 @@ function getIdByUrl(url: string): number {
  */
 function replaceDuplicatedKey(idList: number[]): Promise<number[]> {
 	return db.findArticleByIdList(idList).then((results: Array<number[]>) => {
-		results = util.unique(results);
+		results = util.unique(results, 'id');
         results.map((result: any) => {
             idList.splice(idList.indexOf(result.id), 1);
         });

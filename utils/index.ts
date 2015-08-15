@@ -1,14 +1,27 @@
 /**
  * 数组去重
  * @param {any} arr 
+ * @param {any} objectId 如果对象是Object的话，指定一个Object内的方法或属性作为唯一去重ID
  * @return {any}
+ * @description 注意：不能直接用Set! 因为有Object的存在_(:з」∠)_
  */
-export function unique(arr: any): any {
-	var set = new Set(arr);
-	var ret = [];
-	for (var value of set.values()) {
-		ret.push(value);
-	}
+export function unique(arr: any, objectId: any = null): any {
+	let ret: any = [];
+	let hash: Set = new Set();
+
+	arr.map((value: any) => {
+		let item;
+		if (objectId === null) {
+			item = value;
+		} else {
+			item = value[objectId];
+		}
+		if (!hash.has(item)) {
+			hash.add(item);
+			ret.push(item);
+		}
+	})
+
 	return ret;
 }
 
