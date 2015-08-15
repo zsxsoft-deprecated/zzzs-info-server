@@ -4,7 +4,12 @@
  * @return {any}
  */
 export function unique(arr: any): any {
-	return Array.from(new Set(arr));
+	var set = new Set(arr);
+	var ret = [];
+	for (var value of set.values()) {
+		ret.push(value);
+	}
+	return ret;
 }
 
 /**
