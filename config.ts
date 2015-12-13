@@ -131,11 +131,20 @@ class Plugin {
 	};
 	
 }
+
+class Extra {
+	/**
+	 * 最大日志数量
+	 * @type {number}
+	 */
+	maxLogCount: number = 100;
+}
 class Config {
 	static db: DB = new DB();
 	static view: View = new View();
 	static robot: Robot = new Robot();
 	static cron: Cron = new Cron();
 	static plugin: Plugin = new Plugin();
+	static extra: Extra = new Extra();
 }
 export = Config;

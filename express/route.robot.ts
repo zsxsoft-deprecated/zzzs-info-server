@@ -4,8 +4,11 @@ import config = require('../config');
 import robot = require('../robot/index');
 import intercept = require("intercept-stdout");
 var capturedText: string[] = [];
-var unhook_intercept = intercept(function(txt) {
-    capturedText.push(txt);
+var unhook_intercept = intercept((txt) => {
+   if (config.extra.maxLogCount <= capturedText.length) {
+      capturedText.shift();
+   }
+  capturedText.push(txt);
 });
 class RouteList {
 	constructor(app: express.Express) {
