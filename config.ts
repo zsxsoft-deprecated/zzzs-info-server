@@ -21,7 +21,7 @@ class Robot {
 	 */
 	scanList: string[] = [
 		"gkxx/zzzs/", // 动态
-		"gkxx/zzzs/bkzn/", // 报考指南
+	    "gkxx/zzzs/bkzn/", // 报考指南
 		"gkxx/zzzs/gxzc/", // 高校政策
 	];
 	/**
@@ -55,6 +55,21 @@ class DB {
 	 * @type {string}
 	 */
 	db: string = "zzzs";
+	/**
+	 * 打开身份验证
+	 * @type {string}
+	 */
+    authenticate: boolean = false;
+	/**
+	 * 身份验证用户名
+	 * @type {string}
+	 */
+    username: string = "";
+	/**
+	 * 密码
+	 * @type {string}
+	 */
+    password: string = "";
 }
 class View {
 	/**
@@ -110,28 +125,27 @@ class Plugin {
 	 * @type {string}
 	 */
 	pluginList: string[] = [
-		"xinge"
+		""
 	];
 	
 	/**
 	 * 动态插件类
 	 */
 	plugin: any = {
-		getui: {
+		/*getui: {
 			host: "http://sdk.open.api.igexin.com/apiex.htm",
 			appKey: "",
 			appId: [""],
 			masterSecret: "",
-			logoUrl: ""
+			logoUrl: "http://static-file.zsxsoft.com/zzzs/image/logo.png"
 		}, 
 		xinge: {
 			accessId: 0, // 这里必须为Int类型！
 			secretKey: ""
-		}
+		}*/
 	};
 	
 }
-
 class Extra {
 	/**
 	 * 最大日志数量

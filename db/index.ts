@@ -5,7 +5,17 @@ import config = require('../config');
 
 var server: mongodb.Server = new mongodb.Server(config.db.host, config.db.port, { auto_reconnect: true });
 var db = new mongodb.Db(config.db.db, server, { w: 1 });
-db.open(() => { });
+db.open(() => {
+    if (!config.db.authenticate) return;
+    db.authenticate(config.db.username, config.db.password, (err, result) => {
+        if (!err) {
+            console.log("Authenticated");
+        } else {
+            console.log("Error when authenticate with DB.");
+            console.error(err);
+        }
+    })
+});
 var articleCollection = db.collection("article");
 
 /**
