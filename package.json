@@ -4,6 +4,7 @@
   "description": "自主招生资讯获取器",
   "main": "app.ts",
   "scripts": {
+    "build": "tsc && exit 0", 
     "start": "node app",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
