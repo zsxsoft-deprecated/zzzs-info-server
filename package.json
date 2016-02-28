@@ -10,21 +10,21 @@
   "author": "zsx <zsx@zsxsoft.com>",
   "license": "MIT",
   "dependencies": {
-    "bluebird": "^2.9.33",
-    "cheerio": "^0.19.0",
-    "cron": "^1.0.9",
-    "ejs": "^2.3.2",
-    "express": "^4.13.1",
-    "html-entities": "^1.1.2",
-    "intercept-stdout": "^0.1.1",
-    "mongodb": "^2.0.36",
-    "request": "^2.58.0",
-    "request-promise": "^0.4.2",
-    "rss": "^1.1.1",
-    "typescript": "^1.5.0-beta"
+    "bluebird": "^2.10.2",
+    "cheerio": "^0.20.0",
+    "cron": "^1.1.0",
+    "ejs": "^2.4.1",
+    "express": "^4.13.4",
+    "html-entities": "^1.2.0",
+    "intercept-stdout": "^0.1.2",
+    "mongodb": "^2.1.7",
+    "request": "^2.69.0",
+    "request-promise": "^0.4.3",
+    "rss": "^1.2.1",
+    "typescript": "^1.8.2"
   },
   "devDependencies": {
-    "v8-profiler": "^5.2.9"
+    "v8-profiler": "^5.6.0"
   },
   "repository": {
     "type": "git",

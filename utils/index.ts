@@ -7,7 +7,7 @@
  */
 export function unique(arr: any, objectId: any = null): any {
 	let ret: any = [];
-	let hash: Set = new Set();
+	let hash: Set<string> = new Set();
 
 	arr.map((value: any) => {
 		let item;
