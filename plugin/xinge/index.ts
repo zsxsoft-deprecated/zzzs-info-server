@@ -63,9 +63,9 @@ export function pushMessage(param: Object): Promise<any> {
 event.on("robot.insertArticle", (result: any) => {
 	var $: CheerioStatic = cheerio.load(result.content.toString());
 	pushMessage({
-		title: result.title,
-		content: $.root().text()
-	}).then((res: any) => {
+		title: result.title.toString().substr(0, 30),
+		content: $.root().text().toString.substr(0, 50)
+	}).then((res) => {
 		console.log(res);
     });
 
