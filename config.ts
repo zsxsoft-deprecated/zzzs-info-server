@@ -147,6 +147,10 @@ class Plugin {
 	
 }
 class Extra {
+    /**
+     * 网站根目录Web地址（不要/）
+     */
+    webRoot: string = "http://127.0.0.1";
 	/**
 	 * 最大日志数量
 	 * @type {number}
