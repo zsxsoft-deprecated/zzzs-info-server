@@ -1,6 +1,9 @@
 zzzz-info-server
 =====================
 
+截至2016.6.16仍可正常使用（因为我高考完了），但已停止维护。
+![Screenshot](images/screenshot.png)
+
 一个自主招生信息拉取项目。
 
 其主要功能包括
